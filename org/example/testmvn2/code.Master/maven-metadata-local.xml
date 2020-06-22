@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.example.testmvn2</groupId>
+  <artifactId>code.Master</artifactId>
+  <versioning>
+    <release>7.3.1</release>
+    <versions>
+      <version>7.3.1</version>
+    </versions>
+    <lastUpdated>20200622024646</lastUpdated>
+  </versioning>
+</metadata>

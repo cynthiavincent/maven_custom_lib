@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.glassfish.hk2</groupId>
+  <artifactId>osgi-resource-locator</artifactId>
+  <version>1.0.1</version>
+  <name>OSGi resource locator bundle - used by various API providers that rely on META-INF/services mechanism to locate providers.</name>
+  <description>See http://wiki.glassfish.java.net/Wiki.jsp?page=JdkSpiOsgi for more information</description>
+  <developers>
+    <developer>
+      <id>ss141213</id>
+      <name>Sahoo</name>
+      <organization>Sun Microsystems, Inc.</organization>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:svn:svn+ssh://janey@svn.java.net/hk2~svn/tags/osgi-resource-locator-1.0.1</connection>
+    <developerConnection>scm:svn:svn+ssh://janey@svn.java.net/hk2~svn/tags/osgi-resource-locator-1.0.1</developerConnection>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>rator.sfbay</id>
+      <url>dav:http://glassfish-maven-repository.us.oracle.com/maven/repositories/glassfish/</url>
+    </repository>
+  </distributionManagement>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.1.0</version>
+        <executions>
+          <execution>
+            <id>bundle-manifest</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>manifest</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <instructions>
+            <_include>-${basedir}/osgi.bundle</_include>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

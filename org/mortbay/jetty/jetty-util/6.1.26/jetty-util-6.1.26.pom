@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.mortbay.jetty</groupId>
+  <artifactId>jetty-util</artifactId>
+  <version>6.1.26</version>
+  <name>Jetty Utilities</name>
+  <description>Utility classes for Jetty</description>
+  <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/java</directory>
+        <includes>
+          <include>**/*Test.java</include>
+          <include>org/mortbay/**/*.xml</include>
+        </includes>
+        <excludes>
+          <exclude>**/Abstract*.java</exclude>
+        </excludes>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <delete file="../../lib/${project.artifactId}-${project.version}.${project.packaging}" failonerror="false" />
+                <delete file="../../etc/jetty-logging.xml" failonerror="false" />
+              </tasks>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copyjar</id>
+            <phase>install</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <copy file="target/${project.artifactId}-${project.version}.${project.packaging}" todir="../../lib/" failonerror="false" />
+                <copy file="src/main/config/etc/jetty-logging.xml" todir="../../etc" failonerror="false" />
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>${maven-bundle-plugin-version}</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <goals>
+              <goal>manifest</goal>
+            </goals>
+            <configuration>
+              <instructions>
+                <Bundle-SymbolicName>org.mortbay.jetty.util</Bundle-SymbolicName>
+                <Bundle-RequiredExecutionEnvironment>J2SE-1.4</Bundle-RequiredExecutionEnvironment>
+                <Import-Package>!org.mortbay.*,org.slf4j;resolution:=optional,*</Import-Package>
+                <Bundle-DocURL>http://jetty.mortbay.org</Bundle-DocURL>
+              </instructions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

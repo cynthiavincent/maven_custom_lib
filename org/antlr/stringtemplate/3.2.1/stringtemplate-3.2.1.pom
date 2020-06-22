@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.antlr</groupId>
+  <artifactId>stringtemplate</artifactId>
+  <version>3.2.1</version>
+  <name>ANTLR StringTemplate</name>
+  <description>StringTemplate is a java template engine for generating source code,
+web pages, emails, or any other formatted text output.
+
+StringTemplate is particularly good at multi-targeted code generators,
+multiple site skins, and internationalization/localization. 
+
+It evolved over years of effort developing jGuru.com. 
+
+StringTemplate also generates the stringtemplate website: http://www.stringtemplate.org
+and powers the ANTLR v3 code generator. Its distinguishing characteristic 
+is that unlike other engines, it strictly enforces model-view separation.
+
+Strict separation makes websites and code generators more flexible
+and maintainable; it also provides an excellent defense against malicious
+template authors.
+
+There are currently about 600 StringTemplate source downloads a month.</description>
+  <url>http://www.stringtemplate.org</url>
+  <licenses>
+    <license>
+      <name>BSD licence</name>
+      <url>http://antlr.org/license.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Terence Parr</name>
+      <email>parrt@antlr.org</email>
+      <organization>USFCA</organization>
+      <organizationUrl>http://www.cs.usfca.edu</organizationUrl>
+      <roles>
+        <role>Project Leader</role>
+        <role>Developer - Java Target</role>
+      </roles>
+      <timezone>PST</timezone>
+    </developer>
+    <developer>
+      <name>Jim Idle</name>
+      <email>jimi@temporal-wave.com</email>
+      <organization>Temporal Wave LLC</organization>
+      <organizationUrl>http://www.temporal-wave.com</organizationUrl>
+      <roles>
+        <role>Developer - Maven stuff</role>
+      </roles>
+      <timezone>PST</timezone>
+    </developer>
+  </developers>
+  <scm>
+    <connection>http://fisheye2.cenqua.com/browse/stringtemplate</connection>
+    <url>http://fisheye2.cenqua.com/browse/stringtemplate</url>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>antlr-repo</id>
+      <name>ANTLR Testing repository</name>
+      <url>scpexe://antlr.org/home/mavensync/antlr-repo</url>
+    </repository>
+    <snapshotRepository>
+      <id>antlr-snapshot</id>
+      <name>ANTLR Testing Snapshot Repository</name>
+      <url>scpexe://antlr.org/home/mavensync/antlr-snapshot</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test</testSourceDirectory>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh-external</artifactId>
+        <version>1.0-beta-2</version>
+      </extension>
+    </extensions>
+    <defaultGoal>install</defaultGoal>
+    <testResources>
+      <testResource>
+        <directory>test</directory>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>antlr-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <sourceDirectory>src/org/antlr/stringtemplate/language</sourceDirectory>
+          <grammars>template.g, angle.bracket.template.g, action.g, eval.g, group.g, interface.g</grammars>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.4</source>
+          <target>jsr14</target>
+          <sourceDirectory>src</sourceDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <additionalClasspathElements>
+            <additionalClasspathElement>${basedir}/src</additionalClasspathElement>
+          </additionalClasspathElements>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <configuration>
+          <findbugsXmlOutput>true</findbugsXmlOutput>
+          <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+          <xmlOutput>true</xmlOutput>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
